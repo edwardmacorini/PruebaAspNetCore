@@ -1,0 +1,69 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="h-screen w-screen">
+    <mat-card class="mt-10 w-3/4 py-5">
+        <mat-card-header fxLayout="row">
+            <div fxLayout="column" fxFlex="80">
+                <mat-card-title>
+                    <h1 class="mb-0">CRUD Empleados</h1>
+                </mat-card-title>
+                <mat-card-subtitle>Simple CRUD para administrar empleados</mat-card-subtitle>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="12px">
+                <button mat-raised-button color="primary" (click)="openDialog()">Crear Empleado</button>
+                <a mat-raised-button routerLink="/coin">Ir a Prueba II</a>
+            </div>
+        </mat-card-header>
+        <mat-card-content class="px-10">
+            <mat-divider></mat-divider>
+            <div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="12px">
+                <mat-form-field appearance="standard">
+                    <mat-label>Buscar...</mat-label>
+                    <input matInput (keyup)="aplicarFiltro($event)" placeholder="Buscar..." #input>
+                </mat-form-field>
+            </div>
+            <div class="mat-elevation-z0">
+                <table mat-table [dataSource]="dataSource" class="w-full">
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="apellido">
+                        <th mat-header-cell *matHeaderCellDef> Nombre Completo </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.apellido | titlecase }}&nbsp;{{ element.nombre | titlecase }}
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="fechaContratacion">
+                        <th mat-header-cell *matHeaderCellDef> Fecha de contratación </th>
+                        <td mat-cell *matCellDef="let element"> {{element.fechaContratacion | date:'shortDate'}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-icon-button color="primary" (click)="openDialog(element)">
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" (click)="eliminarEmpleado(element.id)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">Sin resultados para la busqueda: "{{input.value}}"</td>
+                    </tr>
+                </table>
+
+                <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                    aria-label="Seleccionar pagina de empleados">
+                </mat-paginator>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

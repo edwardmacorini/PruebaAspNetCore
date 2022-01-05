@@ -1,0 +1,20 @@
+<mat-card class="mt-5 mx-10">
+    <mat-card-header>
+        <div fxLayout="row" fxLayoutAlign="space-between start" class="w-full">
+            <mat-card-title>
+                <h2>Prueba de consumo de servicio Rest</h2>
+            </mat-card-title>
+            <a mat-raised-button routerLink="/">Volver Atras</a>
+        </div>
+    </mat-card-header>
+    <div style="display: block;" *ngIf="!isLoading; else elseBlock;" class="mt-5">
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [plugins]="barChartPlugins" [legend]="barChartLegend" chartType="bar">
+        </canvas>
+    </div>
+</mat-card>
+<ng-template #elseBlock>
+    <div fxLayout="row" fxLayoutAlign="center center" class="w-full h-full">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>
